@@ -27,8 +27,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: "Free Roof Inspection | Royalty Roofing and Siding | Omaha, NE",
   description: PAGE_DESCRIPTION,
-  // Paid landing page — keep out of organic index, but still serve rich social/meta tags.
-  robots: { index: false, follow: false },
+  robots: { index: true, follow: true },
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
