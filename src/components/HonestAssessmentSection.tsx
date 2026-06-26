@@ -6,7 +6,7 @@
  * - No gold, no icon-in-circle, no floating badge
  */
 
-const ROOF_PHOTO = "/images/bvHlWzgAoNLMEtcN.png";
+  const ROOF_PHOTO = "/images/bvHlWzgAoNLMEtcN.webp";
 
 const PROOF_BLOCKS = [
   {

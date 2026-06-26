@@ -4,11 +4,11 @@
  * Mobile: stacked layout, form shown below headline, badges wrap
  * Background: pure CSS brand-navy gradient (zero image requests) so the H1 is the
  * instant-painting LCP element — mobile LCP < 2.5s, no layout shift.
- * BBB logo: /images/OvrIKRhrXjOUvBsh.png
+ * BBB logo: /images/OvrIKRhrXjOUvBsh.webp
  */
 import EstimateForm from "./EstimateForm";
 
-const BBB_LOGO = "/images/OvrIKRhrXjOUvBsh.png";
+  const BBB_LOGO = "/images/OvrIKRhrXjOUvBsh.webp";
 
 const badgeStyle: React.CSSProperties = {
   display: "flex",
@@ -154,6 +154,9 @@ export default function HeroSection() {
               <img
                 src={BBB_LOGO}
                 alt="BBB"
+                width={26}
+                height={26}
+                decoding="async"
                 style={{ width: "26px", height: "26px", objectFit: "contain" }}
               />
               <div>

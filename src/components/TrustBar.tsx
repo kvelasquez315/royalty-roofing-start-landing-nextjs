@@ -11,14 +11,16 @@ const STATS = [
   { display: "15+", label: "Years Serving Omaha" },
 ];
 
+// width/height = intrinsic WebP dimensions so the browser reserves the correct
+// aspect ratio (CSS scales them to height:130px) — prevents layout shift (CLS).
 const AWARDS = [
-  { src: "/images/YxnCUKTKTxhmuQvH.png", alt: "Best of Omaha 2020, Residential Roofing" },
-  { src: "/images/sSfzxxmSoIYevjBW.png", alt: "Best of Omaha 2021, Residential Siding" },
-  { src: "/images/AlAJNKLYxnwKLRzc.png", alt: "Best of Omaha 2022, Residential Siding" },
-  { src: "/images/wiTUJNMXftSBXyRb.png", alt: "Best of Omaha 2023, Residential Roofing" },
-  { src: "/images/AXiRtluyUJdIhZod.png", alt: "Best of Omaha 2024, Residential Roofing" },
-  { src: "/images/OvgQUnyKHjflghyH.png", alt: "Best of Omaha 2025, Residential Roofing" },
-  { src: "/images/qvfYCjTxkEEEsbbp.png", alt: "Best of Omaha 2026, Residential Siding" },
+  { src: "/images/YxnCUKTKTxhmuQvH.webp", alt: "Best of Omaha 2020, Residential Roofing", w: 210, h: 261 },
+  { src: "/images/sSfzxxmSoIYevjBW.webp", alt: "Best of Omaha 2021, Residential Siding", w: 208, h: 261 },
+  { src: "/images/AlAJNKLYxnwKLRzc.webp", alt: "Best of Omaha 2022, Residential Siding", w: 204, h: 259 },
+  { src: "/images/wiTUJNMXftSBXyRb.webp", alt: "Best of Omaha 2023, Residential Roofing", w: 208, h: 261 },
+  { src: "/images/AXiRtluyUJdIhZod.webp", alt: "Best of Omaha 2024, Residential Roofing", w: 204, h: 259 },
+  { src: "/images/OvgQUnyKHjflghyH.webp", alt: "Best of Omaha 2025, Residential Roofing", w: 208, h: 261 },
+  { src: "/images/qvfYCjTxkEEEsbbp.webp", alt: "Best of Omaha 2026, Residential Siding", w: 206, h: 259 },
 ];
 
 // Pure-CSS animated stat (no JS / no IntersectionObserver) — fades up on load via
@@ -106,6 +108,8 @@ export default function TrustBar() {
             className="award-badge"
             src={award.src}
             alt={award.alt}
+            width={award.w}
+            height={award.h}
             loading="lazy"
             decoding="async"
             style={{

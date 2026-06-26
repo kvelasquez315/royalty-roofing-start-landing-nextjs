@@ -22,8 +22,10 @@ export default function Footer() {
           {/* Col 1: Logo + tagline */}
           <div>
             <img
-              src="/images/jgBpqGuFanZshxxZ.png"
+              src="/images/jgBpqGuFanZshxxZ.webp"
               alt="Royalty Roofing and Siding"
+              width={320}
+              height={52}
               loading="lazy"
               decoding="async"
               style={{ height: "52px", width: "auto", marginBottom: "16px" }}

@@ -8,7 +8,7 @@
  */
 import { useState } from "react";
 
-const LOGO = "/images/jgBpqGuFanZshxxZ.png";
+const LOGO = "/images/jgBpqGuFanZshxxZ.webp";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -68,6 +68,9 @@ export default function Navbar() {
             src={LOGO}
             alt="Royalty Roofing and Siding"
             className="nav-logo"
+            width={345}
+            height={56}
+            fetchPriority="high"
             style={{ height: "56px", width: "auto", maxWidth: "100%", objectFit: "contain", display: "block" }}
           />
         </a>
