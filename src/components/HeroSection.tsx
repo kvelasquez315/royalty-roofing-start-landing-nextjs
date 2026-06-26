@@ -51,13 +51,16 @@ export default function HeroSection() {
           padding: "40px 24px 80px",
           display: "grid",
           gridTemplateColumns: "1fr 460px",
-          gap: "48px",
+          gridTemplateAreas: '"intro form" "trust form"',
+          gridTemplateRows: "auto 1fr",
+          columnGap: "48px",
+          rowGap: "28px",
           alignItems: "start",
         }}
         className="hero-grid"
       >
-        {/* LEFT */}
-        <div>
+        {/* INTRO: eyebrow + headline + subhead */}
+        <div style={{ gridArea: "intro" }} className="hero-intro">
           {/* Eyebrow */}
           <p
             style={{
@@ -73,21 +76,22 @@ export default function HeroSection() {
             Omaha's Trusted Roofer Since 2010
           </p>
 
-          {/* Hero headline */}
+          {/* Hero headline — punchy 2-line hook (also the LCP element) */}
           <h1
             style={{
               fontFamily: "var(--font-display)",
-              fontSize: "clamp(46px, 6.5vw, 84px)",
-              lineHeight: 1.0,
+              fontSize: "clamp(44px, 6vw, 76px)",
+              lineHeight: 1.02,
               color: "white",
-              margin: "0 0 24px",
+              margin: "0 0 20px",
               letterSpacing: "0.01em",
+              textWrap: "balance",
             }}
           >
-            WE INSPECT YOUR ROOF FOR FREE AND ONLY RECOMMEND A REPLACEMENT IF YOU TRULY NEED ONE.
+            Free Roof Inspection. An Honest Answer — Not a Sales Pitch.
           </h1>
 
-          {/* Sub-copy */}
+          {/* Sub-copy — supporting detail moved down from the headline */}
           <p
             style={{
               fontFamily: "var(--font-body)",
@@ -96,12 +100,15 @@ export default function HeroSection() {
               color: "rgba(255,255,255,0.88)",
               lineHeight: 1.65,
               maxWidth: "520px",
-              marginBottom: "28px",
+              margin: 0,
             }}
           >
-Repairs done right. Replacements only when necessary. We're out to your home fast, we handle jobs of any size, and if you have storm damage we work directly with your insurance company from start to finish.
+            We only recommend a replacement if you truly need one. Repairs done right, replacements only when necessary — we&apos;re out to your home fast and handle jobs of any size.
           </p>
+        </div>
 
+        {/* TRUST: badge cluster + mobile CTA */}
+        <div style={{ gridArea: "trust" }} className="hero-trust">
           {/* Trust badge cluster */}
           <div
             style={{
@@ -184,9 +191,56 @@ Repairs done right. Replacements only when necessary. We're out to your home fas
           </a>
         </div>
 
-        {/* RIGHT: Form */}
-        <div style={{ paddingBottom: "8px" }} className="hero-form-col">
+        {/* RIGHT: Form + insurance/honesty trust bullets directly underneath */}
+        <div style={{ gridArea: "form", paddingBottom: "8px" }} className="hero-form-col">
           <EstimateForm variant="glass" />
+
+          <ul
+            style={{
+              listStyle: "none",
+              margin: "18px 0 0",
+              padding: 0,
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+            }}
+          >
+            {[
+              "We handle your insurance claim from first call to final payment",
+              "Free, no-obligation inspection — no pressure, ever",
+              "Honest recommendations: repair when we can, replace only when you truly need it",
+            ].map((bullet) => (
+              <li
+                key={bullet}
+                style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: "10px",
+                  fontFamily: "var(--font-body)",
+                  fontSize: "14px",
+                  fontWeight: 500,
+                  lineHeight: 1.45,
+                  color: "rgba(255,255,255,0.92)",
+                }}
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#5FBF77"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  style={{ flexShrink: 0, marginTop: "1px" }}
+                  aria-hidden="true"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                {bullet}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 
@@ -195,8 +249,10 @@ Repairs done right. Replacements only when necessary. We're out to your home fas
         @media (max-width: 900px) {
           .hero-grid {
             grid-template-columns: 1fr !important;
-            gap: 28px !important;
-            padding: 28px 16px 100px !important;
+            grid-template-areas: "intro" "form" "trust" !important;
+            grid-template-rows: auto !important;
+            row-gap: 24px !important;
+            padding: 24px 16px 100px !important;
           }
           .hero-form-col {
             display: block !important;
@@ -205,7 +261,8 @@ Repairs done right. Replacements only when necessary. We're out to your home fas
             display: flex !important;
           }
           #hero {
-            padding-top: 94px !important;
+            min-height: 0 !important;
+            padding-top: 90px !important;
           }
         }
         @media (max-width: 480px) {
