@@ -87,17 +87,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
         />
 
-        {/* Preload the LCP hero image — mobile (640) variant first for the 94% mobile audience */}
-        <link
-          rel="preload"
-          as="image"
-          href="/images/hero-640.avif"
-          type="image/avif"
-          imageSrcSet="/images/hero-640.avif 640w, /images/hero-1024.avif 1024w, /images/hero-1200.avif 1200w"
-          imageSizes="100vw"
-          fetchPriority="high"
-        />
-
         {/* LocalBusiness structured data */}
         <script
           type="application/ld+json"

@@ -1,10 +1,9 @@
 /**
  * HeroSection — Royalty Roofing
- * Design: Moose-inspired — massive Bebas Neue headline, full-viewport house photo,
- * dark overlay, trust badge cluster left, glass form right
+ * Design: Moose-inspired — massive Bebas Neue headline, trust badge cluster left, glass form right
  * Mobile: stacked layout, form shown below headline, badges wrap
- * Hero image: optimized responsive <picture> (AVIF/WebP/JPG @ 640/1024/1200),
- * preloaded in <head> with fetchpriority=high to fix mobile LCP.
+ * Background: pure CSS brand-navy gradient (zero image requests) so the H1 is the
+ * instant-painting LCP element — mobile LCP < 2.5s, no layout shift.
  * BBB logo: /images/OvrIKRhrXjOUvBsh.png
  */
 import EstimateForm from "./EstimateForm";
@@ -33,49 +32,13 @@ export default function HeroSection() {
         alignItems: "center",
         paddingTop: "110px",
         overflow: "hidden",
+        // Pure CSS brand-navy background — zero network requests, paints instantly.
+        // Base diagonal navy → royal blue, with a soft radial highlight top-left for depth.
+        backgroundColor: "#0E1B33",
+        backgroundImage:
+          "radial-gradient(120% 120% at 12% 8%, rgba(61,108,192,0.45) 0%, rgba(61,108,192,0) 55%), linear-gradient(135deg, #0B1426 0%, #16294C 45%, #2B4C8C 100%)",
       }}
     >
-      {/* Background photo — optimized responsive picture (LCP element) */}
-      <picture>
-        <source
-          type="image/avif"
-          srcSet="/images/hero-640.avif 640w, /images/hero-1024.avif 1024w, /images/hero-1200.avif 1200w"
-          sizes="100vw"
-        />
-        <source
-          type="image/webp"
-          srcSet="/images/hero-640.webp 640w, /images/hero-1024.webp 1024w, /images/hero-1200.webp 1200w"
-          sizes="100vw"
-        />
-        <img
-          src="/images/hero-1200.jpg"
-          srcSet="/images/hero-640.jpg 640w, /images/hero-1024.jpg 1024w, /images/hero-1200.jpg 1200w"
-          sizes="100vw"
-          width={1200}
-          height={900}
-          alt=""
-          aria-hidden="true"
-          fetchPriority="high"
-          decoding="async"
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            objectPosition: "center 30%",
-          }}
-        />
-      </picture>
-
-      {/* Gradient overlay */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background: "linear-gradient(105deg, rgba(6,12,24,0.92) 0%, rgba(6,12,24,0.78) 45%, rgba(6,12,24,0.55) 100%)",
-        }}
-      />
 
       {/* Content grid */}
       <div
