@@ -99,29 +99,43 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Fonts are self-hosted via next/font (see top of file) — no external,
             render-blocking stylesheet request. */}
 
+        {/* Resource hints: warm up the connection to Google's tag/measurement
+            domains so GTM, gtag, GA4, and the Google Ads conversion tag connect
+            faster once they load. dns-prefetch is the fallback for browsers that
+            ignore preconnect. */}
+        <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://www.google-analytics.com" crossOrigin="" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+
         {/* LocalBusiness structured data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(LOCAL_BUSINESS_JSONLD) }}
         />
 
-        {/* Google Tag Manager — deferred to lazyOnload so the tag manager (and
-            everything it injects) never blocks the main thread during initial
-            render. Loads after the page is interactive. */}
-        <Script id="gtm" strategy="lazyOnload">
+        {/* Google Tag Manager — afterInteractive: loads right after hydration so
+            it does NOT block initial render, but is ready well before any form
+            submit. This guarantees the Google Ads conversion event (pushed to
+            dataLayer in tracking.ts) fires reliably. Note: even if a submit
+            happened before GTM finished loading, the event is buffered in
+            dataLayer and processed once GTM initializes — so no conversions are
+            lost either way. */}
+        <Script id="gtm" strategy="afterInteractive">
           {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','${GTM_ID}');`}
         </Script>
-        {/* Google tag (gtag.js) — single library load handles both GA4 + Google Ads IDs.
-            Deferred to idle so it never competes with the LCP hero. */}
+        {/* Google tag (gtag.js) — single library load handles both GA4 + Google
+            Ads IDs. afterInteractive so the conversion + page_view events register
+            promptly without competing with the LCP hero during first paint. */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-B0V4J1CX44"
-          strategy="lazyOnload"
+          strategy="afterInteractive"
         />
-        <Script id="gtag-config" strategy="lazyOnload">
+        <Script id="gtag-config" strategy="afterInteractive">
           {`window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
