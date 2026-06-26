@@ -2,64 +2,50 @@
  * RecentProjectsSection — "Recent Omaha Projects" before/after gallery.
  * id="projects"
  * Light off-white bg to alternate with the dark Reviews section.
- *
- * NOTE: Drop in your real before/after photos by replacing the `src` values
- * below (recommended: optimized .webp/.avif at ~800px wide). Until then these
- * render as clearly labeled placeholders. All images are lazy-loaded.
+ * Photos are optimized 800px .webp and lazy-loaded. Swap in real job-site
+ * photos by replacing the files in /public/images/project-*.webp.
  */
 
 interface Project {
   area: string;
   type: string;
-  beforeSrc?: string;
-  afterSrc?: string;
+  beforeSrc: string;
+  afterSrc: string;
 }
 
 const PROJECTS: Project[] = [
-  { area: "Dundee", type: "Full Roof Replacement" },
-  { area: "Millard", type: "Storm Damage Repair" },
-  { area: "West Omaha", type: "Siding & Gutters" },
-  { area: "Papillion", type: "Hail Damage Replacement" },
-  { area: "Elkhorn", type: "Roof + Siding" },
-  { area: "Bennington", type: "Insurance Claim Rebuild" },
+  {
+    area: "Dundee",
+    type: "Full Roof Replacement",
+    beforeSrc: "/images/project-dundee-before.webp",
+    afterSrc: "/images/project-dundee-after.webp",
+  },
+  {
+    area: "Millard",
+    type: "Storm Damage Repair",
+    beforeSrc: "/images/project-millard-before.webp",
+    afterSrc: "/images/project-millard-after.webp",
+  },
+  {
+    area: "West Omaha",
+    type: "Siding & Gutters",
+    beforeSrc: "/images/project-westomaha-before.webp",
+    afterSrc: "/images/project-westomaha-after.webp",
+  },
 ];
 
-function PhotoTile({ label, src, alt }: { label: string; src?: string; alt: string }) {
-  if (src) {
-    return (
-      <div style={{ position: "relative", aspectRatio: "4/3", overflow: "hidden" }}>
-        <img
-          src={src}
-          alt={alt}
-          loading="lazy"
-          decoding="async"
-          width={800}
-          height={600}
-          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-        />
-        <span style={tagStyle}>{label}</span>
-      </div>
-    );
-  }
+function PhotoTile({ label, src, alt }: { label: string; src: string; alt: string }) {
   return (
-    <div
-      role="img"
-      aria-label={`${alt} — photo coming soon`}
-      style={{
-        position: "relative",
-        aspectRatio: "4/3",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        background: "#E2E5EA",
-        color: "#5B6470",
-        fontFamily: "var(--font-body)",
-        fontWeight: 600,
-        fontSize: "13px",
-        letterSpacing: "0.04em",
-      }}
-    >
-      {label} photo
+    <div style={{ position: "relative", aspectRatio: "4/3", overflow: "hidden" }}>
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        decoding="async"
+        width={800}
+        height={600}
+        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+      />
       <span style={tagStyle}>{label}</span>
     </div>
   );
