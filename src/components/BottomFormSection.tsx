@@ -58,6 +58,7 @@ export default function BottomFormSection() {
           {/* Big phone number */}
           <a
             href="tel:4022168850"
+            className="bottom-phone"
             style={{
               display: "flex",
               alignItems: "center",
@@ -70,8 +71,6 @@ export default function BottomFormSection() {
               letterSpacing: "0.02em",
               transition: "color 0.15s",
             }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "#3D6CC0"; }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "white"; }}
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.1a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.16 6.16l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
@@ -121,8 +120,11 @@ export default function BottomFormSection() {
         </div>
       </div>
 
-      {/* Responsive */}
+      {/* Responsive + CSS-only hover (zero JS) */}
       <style>{`
+        .bottom-phone:hover {
+          color: #3D6CC0 !important;
+        }
         @media (max-width: 900px) {
           .bottom-form-grid {
             grid-template-columns: 1fr !important;

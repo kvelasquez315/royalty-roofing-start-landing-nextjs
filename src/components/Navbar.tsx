@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Navbar - Royalty Roofing
  * - Top announcement bar: blue bg, key trust points (single line on mobile)

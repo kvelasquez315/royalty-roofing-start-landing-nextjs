@@ -95,6 +95,7 @@ export default function TeamBannerSection() {
 
           <a
             href="tel:4022168850"
+            className="team-cta"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -108,14 +109,6 @@ export default function TeamBannerSection() {
               borderRadius: "6px",
               textDecoration: "none",
               transition: "background 0.15s, transform 0.15s",
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.background = "#2d5aad";
-              (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(-1px)";
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.background = "#3D6CC0";
-              (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(0)";
             }}
           >
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -170,8 +163,12 @@ export default function TeamBannerSection() {
         </div>
       </div>
 
-      {/* Responsive */}
+      {/* Responsive + CSS-only hover (zero JS) */}
       <style>{`
+        .team-cta:hover {
+          background: #2d5aad !important;
+          transform: translateY(-1px);
+        }
         @media (max-width: 900px) {
           .team-grid {
             grid-template-columns: 1fr !important;

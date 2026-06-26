@@ -90,6 +90,7 @@ export default function Footer() {
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
               <a
                 href="tel:4022168850"
+                className="footer-link-dark"
                 style={{
                   color: "#0A1220",
                   fontWeight: 600,
@@ -98,13 +99,12 @@ export default function Footer() {
                   textDecoration: "none",
                   transition: "color 0.15s",
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "#3D6CC0")}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "#0A1220")}
               >
                 (402) 216-8850
               </a>
               <a
                 href="mailto:info@royaltyroofing.org"
+                className="footer-link-muted"
                 style={{
                   fontSize: "14px",
                   color: "#6B7280",
@@ -112,8 +112,6 @@ export default function Footer() {
                   textDecoration: "none",
                   transition: "color 0.15s",
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "#3D6CC0")}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "#6B7280")}
               >
                 info@royaltyroofing.org
               </a>
@@ -145,6 +143,7 @@ export default function Footer() {
             href="https://royaltyroofing.org/privacy-policy"
             target="_blank"
             rel="noopener noreferrer"
+            className="footer-link-muted"
             style={{
               fontSize: "12px",
               color: "#6B7280",
@@ -152,14 +151,16 @@ export default function Footer() {
               textDecoration: "none",
               transition: "color 0.15s",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "#3D6CC0")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "#6B7280")}
           >
             Privacy Policy
           </a>
         </div>
       </div>
       <style>{`
+        .footer-link-dark:hover,
+        .footer-link-muted:hover {
+          color: #3D6CC0 !important;
+        }
         @media (max-width: 640px) {
           footer .grid {
             grid-template-columns: 1fr !important;

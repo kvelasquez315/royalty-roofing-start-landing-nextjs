@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * EstimateForm — shared form used in HeroSection and BottomFormSection
  * Design: Dark card (#0d1a2e / near-black), large white inputs with rounded-xl,

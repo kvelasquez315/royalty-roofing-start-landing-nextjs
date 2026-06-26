@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * StickyMobileCTA — Fixed bottom bar on mobile only
  * Buttons: Call Now (tel:) + Text (sms:) + Get Free Estimate (scrolls to form)

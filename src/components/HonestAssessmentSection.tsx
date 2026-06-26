@@ -28,10 +28,6 @@ const PROOF_BLOCKS = [
 ];
 
 export default function HonestAssessmentSection() {
-  const scrollToForm = () => {
-    document.getElementById("bottom-form")?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <section id="why-royalty" style={{ background: "#F5F5F3", padding: "96px 0" }}>
       <div
@@ -139,10 +135,12 @@ export default function HonestAssessmentSection() {
               ))}
             </div>
 
-            {/* CTA */}
-            <button
-              onClick={scrollToForm}
+            {/* CTA — anchor + native smooth scroll (zero JS) */}
+            <a
+              href="#bottom-form"
+              className="why-cta"
               style={{
+                display: "inline-block",
                 background: "#3D6CC0",
                 color: "white",
                 fontFamily: "var(--font-body)",
@@ -153,19 +151,12 @@ export default function HonestAssessmentSection() {
                 border: "none",
                 cursor: "pointer",
                 letterSpacing: "0.02em",
+                textDecoration: "none",
                 transition: "background 0.15s, transform 0.15s",
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLButtonElement).style.background = "#2d5aad";
-                (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-1px)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLButtonElement).style.background = "#3D6CC0";
-                (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)";
               }}
             >
               Schedule a Free Inspection →
-            </button>
+            </a>
           </div>
 
           {/* RIGHT: Photo */}
@@ -190,8 +181,12 @@ export default function HonestAssessmentSection() {
         </div>
       </div>
 
-      {/* Responsive */}
+      {/* Responsive + CSS-only hover (zero JS) */}
       <style>{`
+        .why-cta:hover {
+          background: #2d5aad !important;
+          transform: translateY(-1px);
+        }
         @media (max-width: 900px) {
           .why-grid {
             grid-template-columns: 1fr !important;

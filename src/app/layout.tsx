@@ -1,6 +1,23 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
+import { Bebas_Neue, DM_Sans } from "next/font/google";
 import "./globals.css";
+
+// Self-hosted, preloaded fonts with display:swap — removes the render-blocking
+// Google Fonts <link> from <head> so the H1 (LCP) text paints instantly on the
+// fallback face and swaps without blocking first paint.
+const bebasNeue = Bebas_Neue({
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-bebas",
+});
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-dm",
+});
 
 const SITE_URL = "https://royaltyroofing.org";
 const PAGE_DESCRIPTION =
@@ -78,14 +95,10 @@ const ANALYTICS_WEBSITE_ID = process.env.NEXT_PUBLIC_ANALYTICS_WEBSITE_ID;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="bg-background">
+    <html lang="en" className={`bg-background ${bebasNeue.variable} ${dmSans.variable}`}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap"
-          rel="stylesheet"
-        />
+        {/* Fonts are self-hosted via next/font (see top of file) — no external,
+            render-blocking stylesheet request. */}
 
         {/* LocalBusiness structured data */}
         <script
@@ -93,8 +106,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(LOCAL_BUSINESS_JSONLD) }}
         />
 
-        {/* Google Tag Manager */}
-        <Script id="gtm" strategy="afterInteractive">
+        {/* Google Tag Manager — deferred to lazyOnload so the tag manager (and
+            everything it injects) never blocks the main thread during initial
+            render. Loads after the page is interactive. */}
+        <Script id="gtm" strategy="lazyOnload">
           {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=

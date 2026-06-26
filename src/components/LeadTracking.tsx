@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * LeadTracking — mounts once and listens (via event delegation) for clicks on
  * any tel: or sms: link anywhere on the page, firing a `generate_lead` event
