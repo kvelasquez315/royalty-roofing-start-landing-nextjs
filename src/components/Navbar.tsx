@@ -126,6 +126,27 @@ export default function Navbar() {
             (402) 216-8850
           </a>
 
+          {/* Prefer to text? */}
+          <a
+            href="sms:+14022168850"
+            className="hidden sm:flex"
+            style={{
+              alignItems: "center",
+              gap: "6px",
+              color: "#2d5aad",
+              fontFamily: "var(--font-body)",
+              fontWeight: 700,
+              fontSize: "15px",
+              textDecoration: "none",
+              minHeight: "48px",
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }} aria-hidden="true">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            </svg>
+            Text us
+          </a>
+
           {/* CTA button — desktop only */}
           <button
             onClick={() => scrollTo("bottom-form")}

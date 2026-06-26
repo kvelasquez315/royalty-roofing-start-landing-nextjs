@@ -24,6 +24,8 @@ export default function Footer() {
             <img
               src="/images/jgBpqGuFanZshxxZ.png"
               alt="Royalty Roofing and Siding"
+              loading="lazy"
+              decoding="async"
               style={{ height: "52px", width: "auto", marginBottom: "16px" }}
             />
             <p
@@ -136,7 +138,7 @@ export default function Footer() {
             gap: "12px",
           }}
         >
-          <p style={{ fontSize: "12px", color: "#9CA3AF", fontFamily: "var(--font-body)" }}>
+          <p style={{ fontSize: "12px", color: "#6B7280", fontFamily: "var(--font-body)" }}>
             &copy; {new Date().getFullYear()} Royalty Roofing and Siding. All rights reserved.
           </p>
           <a
@@ -145,13 +147,13 @@ export default function Footer() {
             rel="noopener noreferrer"
             style={{
               fontSize: "12px",
-              color: "#9CA3AF",
+              color: "#6B7280",
               fontFamily: "var(--font-body)",
               textDecoration: "none",
               transition: "color 0.15s",
             }}
             onMouseEnter={(e) => (e.currentTarget.style.color = "#3D6CC0")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "#9CA3AF")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "#6B7280")}
           >
             Privacy Policy
           </a>

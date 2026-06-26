@@ -174,6 +174,10 @@ export default function HonestAssessmentSection() {
               src={ROOF_PHOTO}
               alt="Royalty Roofing crew completing a residential roofing project in Omaha"
               className="why-photo"
+              loading="lazy"
+              decoding="async"
+              width={640}
+              height={520}
               style={{
                 width: "100%",
                 height: "520px",

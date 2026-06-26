@@ -83,7 +83,7 @@ export default function TrustBar() {
                 fontFamily: "var(--font-body)",
                 fontSize: "12px",
                 fontWeight: 500,
-                color: "rgba(255,255,255,0.45)",
+                color: "rgba(255,255,255,0.72)",
                 textTransform: "uppercase",
                 letterSpacing: "0.1em",
                 marginTop: "10px",
@@ -115,6 +115,8 @@ export default function TrustBar() {
             key={award.alt}
             src={award.src}
             alt={award.alt}
+            loading="lazy"
+            decoding="async"
             style={{
               height: "130px",
               width: "auto",

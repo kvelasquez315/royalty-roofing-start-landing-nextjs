@@ -46,7 +46,7 @@ export default function BottomFormSection() {
             style={{
               fontFamily: "var(--font-body)",
               fontSize: "16px",
-              color: "rgba(255,255,255,0.65)",
+              color: "rgba(255,255,255,0.82)",
               lineHeight: 1.75,
               marginBottom: "32px",
               maxWidth: "480px",
@@ -104,7 +104,7 @@ export default function BottomFormSection() {
                   style={{
                     fontFamily: "var(--font-body)",
                     fontSize: "15px",
-                    color: "rgba(255,255,255,0.72)",
+                    color: "rgba(255,255,255,0.88)",
                     fontWeight: 500,
                   }}
                 >

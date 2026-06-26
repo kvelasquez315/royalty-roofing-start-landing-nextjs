@@ -80,6 +80,24 @@
   input[type="checkbox"]:not(:disabled) {
     cursor: pointer;
   }
+
+  /* Visible, high-contrast focus state on all interactive elements (WCAG 2.4.7) */
+  a[href]:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  [role="button"]:focus-visible {
+    outline: 3px solid #7aa2e3;
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  /* Form inputs sit on a light field — give them a focus ring that reads on white too */
+  input:focus-visible,
+  textarea:focus-visible {
+    outline-color: #2d5aad;
+  }
 }
 
 @layer components {

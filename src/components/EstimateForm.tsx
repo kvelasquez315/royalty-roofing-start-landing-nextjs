@@ -6,13 +6,7 @@
  */
 import { useState } from "react";
 import { CheckCircle, Loader2 } from "lucide-react";
-
-function pushEvent(eventName: string, params?: Record<string, string>) {
-  if (typeof window !== "undefined") {
-    (window as any).dataLayer = (window as any).dataLayer || [];
-    (window as any).dataLayer.push({ event: eventName, ...params });
-  }
-}
+import { trackLead, postLeadToCRM } from "@/lib/tracking";
 
 interface EstimateFormProps {
   variant?: "glass" | "card";
@@ -35,16 +29,11 @@ export default function EstimateForm({ variant = "card" }: EstimateFormProps) {
     e.preventDefault();
     setStatus("loading");
     try {
-      const webhookUrl = process.env.NEXT_PUBLIC_FORM_WEBHOOK_URL || "https://services.leadconnectorhq.com/hooks/2HOx7nqhyy85pwGlIHvA/webhook-trigger/nl9HCf4tULqBC1DFj3uX";
-      if (webhookUrl) {
-        await fetch(webhookUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...form, submittedAt: new Date().toISOString() }),
-        });
-      }
+      // POST the lead to our CRM/webhook (endpoint configured in lib/tracking.ts)
+      await postLeadToCRM({ ...form, source: "roofing_estimate" });
       setStatus("success");
-      pushEvent("form_submission", { form_type: "roofing_estimate" });
+      // Fire the conversion event (dataLayer + gtag generate_lead, method "form")
+      trackLead("form", { form_type: "roofing_estimate" });
     } catch {
       setStatus("error");
     }
@@ -86,10 +75,10 @@ export default function EstimateForm({ variant = "card" }: EstimateFormProps) {
           className="text-2xl font-bold mb-2"
           style={{ fontFamily: "var(--font-body)", color: "white" }}
         >
-          We'll Be in Touch Soon!
+          Thanks! We&apos;ll call you within 1 business day.
         </h3>
-        <p className="text-white/75 text-sm leading-relaxed">
-          Thank you for reaching out. A member of our team will contact you within one business day.
+        <p className="text-white/80 text-sm leading-relaxed">
+          A member of our Omaha team will reach out to schedule your free, no-obligation roof inspection.
         </p>
         <p className="mt-5 font-semibold text-white/90">
           Need immediate help? Call{" "}
@@ -114,6 +103,24 @@ export default function EstimateForm({ variant = "card" }: EstimateFormProps) {
     >
       {/* Header */}
       <div className="px-7 pt-7 pb-5">
+        {/* Trust line */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "7px",
+            marginBottom: "12px",
+            fontFamily: "var(--font-body)",
+            fontSize: "13px",
+            fontWeight: 600,
+            color: "rgba(255,255,255,0.92)",
+          }}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#F59E0B" aria-hidden="true">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+          Join 500+ Omaha homeowners — 4.9 on Google.
+        </div>
         <h3
           style={{
             fontFamily: "var(--font-body)",
@@ -138,6 +145,7 @@ export default function EstimateForm({ variant = "card" }: EstimateFormProps) {
               name="firstName"
               type="text"
               required
+              autoComplete="given-name"
               placeholder="First Name"
               value={form.firstName}
               onChange={handleChange}
@@ -151,6 +159,7 @@ export default function EstimateForm({ variant = "card" }: EstimateFormProps) {
               name="lastName"
               type="text"
               required
+              autoComplete="family-name"
               placeholder="Last Name"
               value={form.lastName}
               onChange={handleChange}
@@ -166,6 +175,8 @@ export default function EstimateForm({ variant = "card" }: EstimateFormProps) {
             id="phone"
             name="phone"
             type="tel"
+            inputMode="numeric"
+            autoComplete="tel"
             required
             placeholder="(402) 000-0000"
             value={form.phone}
@@ -207,11 +218,39 @@ export default function EstimateForm({ variant = "card" }: EstimateFormProps) {
           )}
         </button>
 
+        {/* Reassurance microcopy directly under the submit button */}
+        <p
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: "13px",
+            color: "rgba(255,255,255,0.75)",
+            textAlign: "center",
+            margin: "10px 0 0",
+            lineHeight: 1.5,
+          }}
+        >
+          ✓ Free inspection · No obligation · We call within 1 business day.
+        </p>
+
         {status === "error" && (
-          <p style={{ color: "#f87171", fontSize: "13px", textAlign: "center", fontFamily: "var(--font-body)" }}>
+          <p style={{ color: "#fca5a5", fontSize: "13px", textAlign: "center", fontFamily: "var(--font-body)" }}>
             Something went wrong. Please call us at (402) 216-8850.
           </p>
         )}
+
+        {/* Consent statement (not a blocking checkbox) */}
+        <p
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: "11px",
+            color: "rgba(255,255,255,0.6)",
+            textAlign: "center",
+            margin: "4px 0 0",
+            lineHeight: 1.5,
+          }}
+        >
+          By submitting, you agree to receive calls/texts about your project. Msg &amp; data rates may apply.
+        </p>
       </div>
 
       <style>{`

@@ -146,6 +146,8 @@ export default function TeamBannerSection() {
             <img
               src={TEAM_1}
               alt="AJ Velasquez, Owner, Royalty Roofing and Siding"
+              loading="lazy"
+              decoding="async"
               style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center", display: "block" }}
             />
           </div>
@@ -160,6 +162,8 @@ export default function TeamBannerSection() {
             <img
               src={TEAM_2}
               alt="David Velasquez, Co-Owner, Royalty Roofing and Siding"
+              loading="lazy"
+              decoding="async"
               style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center", display: "block" }}
             />
           </div>

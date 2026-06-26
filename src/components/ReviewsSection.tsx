@@ -130,7 +130,7 @@ export default function ReviewsSection() {
                 </p>
                 <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
                   <GoogleGMark />
-                  <span style={{ fontFamily: "var(--font-body)", color: "#9CA3AF", fontSize: "12px" }}>
+                  <span style={{ fontFamily: "var(--font-body)", color: "#6B7280", fontSize: "12px" }}>
                     Google Review
                   </span>
                 </div>
