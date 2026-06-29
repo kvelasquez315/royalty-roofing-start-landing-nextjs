@@ -23,7 +23,7 @@ const PROOF_BLOCKS = [
   },
   {
     label: "Every job backed by a written warranty",
-    desc: "We stand behind our work. Every repair and replacement comes with a written workmanship warranty.",
+    desc: "We stand behind our work. Every full replacement comes with a written workmanship warranty.",
   },
 ];
 
