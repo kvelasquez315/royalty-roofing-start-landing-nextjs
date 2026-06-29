@@ -10,6 +10,37 @@
 
 export type LeadMethod = "form" | "call" | "text";
 
+/**
+ * Google Ads conversion label for the "Submit lead form" conversion action.
+ * Format: AW-<account>/<conversion-label>. Used as the gtag `send_to` value.
+ */
+const GOOGLE_ADS_FORM_CONVERSION = "AW-931355603/tkwuCKLs78ccENO3jbwD";
+
+/**
+ * Fire the Google Ads "Submit lead form" conversion. Mirrors Google's
+ * gtag_report_conversion snippet, but without the redirect callback since the
+ * form shows an inline success state instead of navigating away.
+ * Optionally pass a `url` to navigate to after the conversion is recorded.
+ */
+export function reportAdsConversion(url?: string): boolean {
+  if (typeof window === "undefined") return false;
+
+  const w = window as unknown as { gtag?: (...args: unknown[]) => void };
+  if (typeof w.gtag !== "function") {
+    // gtag not ready yet — still allow navigation if one was requested.
+    if (url) window.location.href = url;
+    return false;
+  }
+
+  w.gtag("event", "conversion", {
+    send_to: GOOGLE_ADS_FORM_CONVERSION,
+    event_callback: () => {
+      if (typeof url !== "undefined") window.location.href = url;
+    },
+  });
+  return false;
+}
+
 // TODO: Replace with your CRM/webhook endpoint (or set NEXT_PUBLIC_CRM_WEBHOOK_URL in project env vars).
 const CRM_WEBHOOK_URL =
   process.env.NEXT_PUBLIC_CRM_WEBHOOK_URL ||

@@ -8,7 +8,7 @@
  */
 import { useState } from "react";
 import { CheckCircle, Loader2 } from "lucide-react";
-import { trackLead, postLeadToCRM } from "@/lib/tracking";
+import { trackLead, postLeadToCRM, reportAdsConversion } from "@/lib/tracking";
 
 interface EstimateFormProps {
   variant?: "glass" | "card";
@@ -34,8 +34,10 @@ export default function EstimateForm({ variant = "card" }: EstimateFormProps) {
       // POST the lead to our CRM/webhook (endpoint configured in lib/tracking.ts)
       await postLeadToCRM({ ...form, source: "roofing_estimate" });
       setStatus("success");
-      // Fire the conversion event (dataLayer + gtag generate_lead, method "form")
+      // Fire the GA4 / GTM lead event (dataLayer + gtag generate_lead, method "form")
       trackLead("form", { form_type: "roofing_estimate" });
+      // Fire the Google Ads "Submit lead form" conversion (no redirect — inline success state)
+      reportAdsConversion();
     } catch {
       setStatus("error");
     }
