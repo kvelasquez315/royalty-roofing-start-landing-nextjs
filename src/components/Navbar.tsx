@@ -133,7 +133,7 @@ export default function Navbar() {
 
           {/* Prefer to text? */}
           <a
-            href="sms:+14022168850"
+            href="sms:+14029839816"
             className="hidden sm:flex"
             style={{
               alignItems: "center",
