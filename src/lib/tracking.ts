@@ -37,26 +37,21 @@ export function reportCallConversion(): boolean {
 }
 
 /**
- * Fire the Google Ads "Submit lead form" conversion. Mirrors Google's
- * gtag_report_conversion snippet, but without the redirect callback since the
- * form shows an inline success state instead of navigating away.
- * Optionally pass a `url` to navigate to after the conversion is recorded.
+ * Fire the Google Ads "Submit lead form" conversion (value 1.0 USD). The form
+ * shows an inline success state, so no redirect callback is needed.
+ * Idempotency is enforced by the caller (fires exactly once per successful
+ * submit) — see EstimateForm's `conversionFired` ref.
  */
-export function reportAdsConversion(url?: string): boolean {
+export function reportAdsConversion(): boolean {
   if (typeof window === "undefined") return false;
 
   const w = window as unknown as { gtag?: (...args: unknown[]) => void };
-  if (typeof w.gtag !== "function") {
-    // gtag not ready yet — still allow navigation if one was requested.
-    if (url) window.location.href = url;
-    return false;
-  }
+  if (typeof w.gtag !== "function") return false;
 
   w.gtag("event", "conversion", {
     send_to: GOOGLE_ADS_FORM_CONVERSION,
-    event_callback: () => {
-      if (typeof url !== "undefined") window.location.href = url;
-    },
+    value: 1.0,
+    currency: "USD",
   });
   return false;
 }

@@ -6,7 +6,7 @@
  * full-width selects stacked, big blue CTA button with Bebas Neue uppercase text.
  * Fields: First Name, Last Name, Phone only.
  */
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { CheckCircle, Loader2 } from "lucide-react";
 import { trackLead, postLeadToCRM, reportAdsConversion } from "@/lib/tracking";
 
@@ -16,6 +16,8 @@ interface EstimateFormProps {
 
 export default function EstimateForm({ variant = "card" }: EstimateFormProps) {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  // Guards the Google Ads conversion so it fires exactly once per successful submit.
+  const conversionFired = useRef(false);
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -36,8 +38,11 @@ export default function EstimateForm({ variant = "card" }: EstimateFormProps) {
       setStatus("success");
       // Fire the GA4 / GTM lead event (dataLayer + gtag generate_lead, method "form")
       trackLead("form", { form_type: "roofing_estimate" });
-      // Fire the Google Ads "Submit lead form" conversion (no redirect — inline success state)
-      reportAdsConversion();
+      // Fire the Google Ads "Submit lead form" conversion exactly once per successful submit
+      if (!conversionFired.current) {
+        conversionFired.current = true;
+        reportAdsConversion();
+      }
     } catch {
       setStatus("error");
     }
