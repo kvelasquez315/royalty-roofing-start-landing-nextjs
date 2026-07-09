@@ -88,7 +88,6 @@ export const viewport: Viewport = {
   maximumScale: 1,
 };
 
-const GTM_ID = "GTM-TQQLJ5MQ";
 const ANALYTICS_ENDPOINT = process.env.NEXT_PUBLIC_ANALYTICS_ENDPOINT;
 const ANALYTICS_WEBSITE_ID = process.env.NEXT_PUBLIC_ANALYTICS_WEBSITE_ID;
 
@@ -114,26 +113,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(LOCAL_BUSINESS_JSONLD) }}
         />
 
-        {/* Google Tag Manager — lazyOnload: GTM (and the GA4 + Google Ads tags it
-            injects) is the single biggest source of third-party main-thread work.
-            Loading it during browser idle time, after the page is interactive,
-            keeps that work off the critical path so it never competes with the
-            hero render or hydration.
-
-            Conversion safety: the `dataLayer` array is created synchronously here
-            and `trackLead()` pushes the `generate_lead` event onto it on form
-            submit. Because GTM replays the entire dataLayer when it initializes,
-            any event queued before GTM finishes loading is still processed once it
-            boots — so no GA4 pageview or Google Ads conversion is ever lost, even
-            if a user submits unusually fast. (Falls back to afterInteractive only
-            if conversion timing ever proves unreliable.) */}
-        <Script id="gtm" strategy="lazyOnload">
-          {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','${GTM_ID}');`}
-        </Script>
         {/* Google tag (gtag.js) — single library load handles both GA4 + Google
             Ads IDs. lazyOnload so it loads during idle without adding to the
             initial main-thread work. */}
@@ -150,15 +129,6 @@ gtag('config', 'AW-931355603');`}
         </Script>
       </head>
       <body>
-        {/* Google Tag Manager (noscript) */}
-        <noscript>
-          <iframe
-            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
-            height="0"
-            width="0"
-            style={{ display: "none", visibility: "hidden" }}
-          />
-        </noscript>
         {children}
         {ANALYTICS_ENDPOINT && ANALYTICS_WEBSITE_ID && (
           <Script
