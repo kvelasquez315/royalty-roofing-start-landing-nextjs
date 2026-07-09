@@ -11,10 +11,30 @@
 export type LeadMethod = "form" | "call" | "text";
 
 /**
- * Google Ads conversion label for the "Submit lead form" conversion action.
- * Format: AW-<account>/<conversion-label>. Used as the gtag `send_to` value.
+ * Google Ads conversion labels. Format: AW-<account>/<conversion-label>.
+ * Used as the gtag `send_to` value.
  */
 const GOOGLE_ADS_FORM_CONVERSION = "AW-931355603/tkwuCKLs78ccENO3jbwD";
+const GOOGLE_ADS_CALL_CONVERSION = "AW-931355603/uVslCNmV3c0cENO3jbwD";
+
+/**
+ * Fire the Google Ads "Click to call" conversion. Mirrors Google's
+ * gtag_report_conversion snippet (value 1.0 USD). Fire-and-forget: we don't
+ * hijack navigation because tel: links open the dialer natively.
+ */
+export function reportCallConversion(): boolean {
+  if (typeof window === "undefined") return false;
+
+  const w = window as unknown as { gtag?: (...args: unknown[]) => void };
+  if (typeof w.gtag !== "function") return false;
+
+  w.gtag("event", "conversion", {
+    send_to: GOOGLE_ADS_CALL_CONVERSION,
+    value: 1.0,
+    currency: "USD",
+  });
+  return false;
+}
 
 /**
  * Fire the Google Ads "Submit lead form" conversion. Mirrors Google's

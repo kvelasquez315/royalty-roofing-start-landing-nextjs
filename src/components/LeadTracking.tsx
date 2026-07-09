@@ -7,7 +7,7 @@
  * tracked without wiring onClick into each component.
  */
 import { useEffect } from "react";
-import { trackLead } from "@/lib/tracking";
+import { trackLead, reportCallConversion } from "@/lib/tracking";
 
 export default function LeadTracking() {
   useEffect(() => {
@@ -20,6 +20,8 @@ export default function LeadTracking() {
       const href = anchor.getAttribute("href") || "";
       const method = href.startsWith("sms:") ? "text" : "call";
       trackLead(method);
+      // Fire the Google Ads "Click to call" conversion on tel: clicks only.
+      if (method === "call") reportCallConversion();
     };
     document.addEventListener("click", handler);
     return () => document.removeEventListener("click", handler);
