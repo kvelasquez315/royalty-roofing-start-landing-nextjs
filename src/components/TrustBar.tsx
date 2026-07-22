@@ -5,44 +5,36 @@
  * - Award badges row: all 7 Best of Omaha badges with VERIFIED CDN URLs
  * CDN URLs verified 2026-04-22
  */
-import { useEffect, useRef, useState } from "react";
-
 const STATS = [
   { display: "4.9★", label: "Google Rating" },
   { display: "7×", label: "Best of Omaha Winner" },
   { display: "15+", label: "Years Serving Omaha" },
 ];
 
+// width/height = intrinsic WebP dimensions so the browser reserves the correct
+// aspect ratio (CSS scales them to height:130px) — prevents layout shift (CLS).
 const AWARDS = [
-  { src: "/images/YxnCUKTKTxhmuQvH.png", alt: "Best of Omaha 2020, Residential Roofing" },
-  { src: "/images/sSfzxxmSoIYevjBW.png", alt: "Best of Omaha 2021, Residential Siding" },
-  { src: "/images/AlAJNKLYxnwKLRzc.png", alt: "Best of Omaha 2022, Residential Siding" },
-  { src: "/images/wiTUJNMXftSBXyRb.png", alt: "Best of Omaha 2023, Residential Roofing" },
-  { src: "/images/AXiRtluyUJdIhZod.png", alt: "Best of Omaha 2024, Residential Roofing" },
-  { src: "/images/OvgQUnyKHjflghyH.png", alt: "Best of Omaha 2025, Residential Roofing" },
-  { src: "/images/qvfYCjTxkEEEsbbp.png", alt: "Best of Omaha 2026, Residential Siding" },
+  { src: "/images/YxnCUKTKTxhmuQvH.webp", alt: "Best of Omaha 2020, Residential Roofing", w: 210, h: 261 },
+  { src: "/images/sSfzxxmSoIYevjBW.webp", alt: "Best of Omaha 2021, Residential Siding", w: 208, h: 261 },
+  { src: "/images/AlAJNKLYxnwKLRzc.webp", alt: "Best of Omaha 2022, Residential Siding", w: 204, h: 259 },
+  { src: "/images/wiTUJNMXftSBXyRb.webp", alt: "Best of Omaha 2023, Residential Roofing", w: 208, h: 261 },
+  { src: "/images/AXiRtluyUJdIhZod.webp", alt: "Best of Omaha 2024, Residential Roofing", w: 204, h: 259 },
+  { src: "/images/OvgQUnyKHjflghyH.webp", alt: "Best of Omaha 2025, Residential Roofing", w: 208, h: 261 },
+  { src: "/images/qvfYCjTxkEEEsbbp.webp", alt: "Best of Omaha 2026, Residential Siding", w: 206, h: 259 },
 ];
 
+// Pure-CSS animated stat (no JS / no IntersectionObserver) — fades up on load via
+// the `stat-num` keyframe defined in this component's <style> block.
 function AnimatedStat({ display }: { display: string }) {
-  const [visible, setVisible] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, { threshold: 0.1 });
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, []);
   return (
     <div
-      ref={ref}
+      className="stat-num"
       style={{
         fontFamily: "var(--font-display)",
         fontSize: "clamp(40px, 4.5vw, 56px)",
         color: "white",
         lineHeight: 1,
         letterSpacing: "0.01em",
-        opacity: visible ? 1 : 0.15,
-        transform: visible ? "translateY(0)" : "translateY(8px)",
-        transition: "opacity 0.5s ease, transform 0.5s ease",
       }}
     >
       {display}
@@ -83,7 +75,7 @@ export default function TrustBar() {
                 fontFamily: "var(--font-body)",
                 fontSize: "12px",
                 fontWeight: 500,
-                color: "rgba(255,255,255,0.45)",
+                color: "rgba(255,255,255,0.72)",
                 textTransform: "uppercase",
                 letterSpacing: "0.1em",
                 marginTop: "10px",
@@ -113,31 +105,41 @@ export default function TrustBar() {
         {AWARDS.map((award) => (
           <img
             key={award.alt}
+            className="award-badge"
             src={award.src}
             alt={award.alt}
+            width={award.w}
+            height={award.h}
+            loading="lazy"
+            decoding="async"
             style={{
               height: "130px",
               width: "auto",
               objectFit: "contain",
               opacity: 0.85,
               transition: "opacity 0.2s, transform 0.2s",
-              mixBlendMode: undefined,
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLImageElement).style.opacity = "1";
-              (e.currentTarget as HTMLImageElement).style.transform = "scale(1.06)";
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLImageElement).style.opacity = "0.85";
-              (e.currentTarget as HTMLImageElement).style.transform = "scale(1)";
             }}
           />
         ))}
         </div>
       </div>
 
-      {/* Responsive */}
+      {/* Responsive + CSS-only interactions (zero JS) */}
       <style>{`
+        .award-badge:hover {
+          opacity: 1 !important;
+          transform: scale(1.06);
+        }
+        @keyframes statFadeUp {
+          from { opacity: 0.15; transform: translateY(8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .stat-num {
+          animation: statFadeUp 0.5s ease both;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .stat-num { animation: none; }
+        }
         @media (max-width: 640px) {
           .stats-grid {
             grid-template-columns: repeat(3, 1fr) !important;

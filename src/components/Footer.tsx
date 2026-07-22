@@ -22,8 +22,12 @@ export default function Footer() {
           {/* Col 1: Logo + tagline */}
           <div>
             <img
-              src="/images/jgBpqGuFanZshxxZ.png"
+              src="/images/jgBpqGuFanZshxxZ.webp"
               alt="Royalty Roofing and Siding"
+              width={320}
+              height={52}
+              loading="lazy"
+              decoding="async"
               style={{ height: "52px", width: "auto", marginBottom: "16px" }}
             />
             <p
@@ -88,6 +92,7 @@ export default function Footer() {
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
               <a
                 href="tel:4022168850"
+                className="footer-link-dark"
                 style={{
                   color: "#0A1220",
                   fontWeight: 600,
@@ -96,13 +101,12 @@ export default function Footer() {
                   textDecoration: "none",
                   transition: "color 0.15s",
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "#3D6CC0")}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "#0A1220")}
               >
                 (402) 216-8850
               </a>
               <a
                 href="mailto:info@royaltyroofing.org"
+                className="footer-link-muted"
                 style={{
                   fontSize: "14px",
                   color: "#6B7280",
@@ -110,8 +114,6 @@ export default function Footer() {
                   textDecoration: "none",
                   transition: "color 0.15s",
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "#3D6CC0")}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "#6B7280")}
               >
                 info@royaltyroofing.org
               </a>
@@ -136,28 +138,31 @@ export default function Footer() {
             gap: "12px",
           }}
         >
-          <p style={{ fontSize: "12px", color: "#9CA3AF", fontFamily: "var(--font-body)" }}>
+          <p style={{ fontSize: "12px", color: "#6B7280", fontFamily: "var(--font-body)" }}>
             &copy; {new Date().getFullYear()} Royalty Roofing and Siding. All rights reserved.
           </p>
           <a
             href="https://royaltyroofing.org/privacy-policy"
             target="_blank"
             rel="noopener noreferrer"
+            className="footer-link-muted"
             style={{
               fontSize: "12px",
-              color: "#9CA3AF",
+              color: "#6B7280",
               fontFamily: "var(--font-body)",
               textDecoration: "none",
               transition: "color 0.15s",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "#3D6CC0")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "#9CA3AF")}
           >
             Privacy Policy
           </a>
         </div>
       </div>
       <style>{`
+        .footer-link-dark:hover,
+        .footer-link-muted:hover {
+          color: #3D6CC0 !important;
+        }
         @media (max-width: 640px) {
           footer .grid {
             grid-template-columns: 1fr !important;
